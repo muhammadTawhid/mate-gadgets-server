@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 require("dotenv").config();
 
 const app = express();
@@ -37,10 +37,39 @@ client.connect(err => {
 
     // read data by name
     app.get("/product/:name", (req, res) =>{
+        console.log(req.params.name)
         gadgetsCollection.find({name:req.params.name})
         .toArray((err, document) =>{
             res.send(document)
         })
+    })
+    // read data by id
+    app.get("/productById/:id", (req, res) =>{
+        console.log(req.params.id)
+        gadgetsCollection.find({_id: ObjectId(req.params.id)})
+        .toArray((err, document) =>{
+            res.send(document[0])
+        })
+    })
+
+    // update data to database
+    app.patch("/editProduct/:id", (req, res) =>{
+        const name = req.body.name;
+        const price = req.body.price;
+        const category = req.body.category;
+        const img = req.body.img;
+        gadgetsCollection.findOneAndUpdate(
+            {_id: ObjectId(req.params.id)},
+            {$set: {name: name, price: price, category: category, img: img} },
+            {returnDocument: true}
+        )
+        .then((err, doc) => console.log(err, doc) )
+    })
+
+    // delete data from database
+    app.delete("/delete/:id", (req, res) =>{
+        gadgetsCollection.findOneAndDelete({_id: ObjectId(req.params.id)})
+        .then((err, doc) => console.log(err, doc))
     })
 });
 
