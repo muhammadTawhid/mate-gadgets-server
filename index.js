@@ -23,7 +23,7 @@ client.connect(err => {
   app.post("/addProduct", (req, res) =>{
       gadgetsCollection.insertOne(req.body)
       .then(result => {
-          console.log(result);
+          res.send(result);
       })
   })
 
@@ -63,7 +63,7 @@ client.connect(err => {
             {$set: {name: name, price: price, category: category, img: img} },
             {returnDocument: true}
         )
-        .then((err, doc) => console.log(err, doc) )
+        .then((result) => res.send(result) )
     })
 
     // delete data from database
