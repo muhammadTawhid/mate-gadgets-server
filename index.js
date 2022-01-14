@@ -18,6 +18,7 @@ const uri = `mongodb+srv://${dbUser}:${dbPassword}@mate-gadgets.wtxhn.mongodb.ne
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const gadgetsCollection = client.db(dbUser).collection("gadgets");
+  const ordersCollection = client.db(dbUser).collection("orders");
 
     //   create data to database
   app.post("/addProduct", (req, res) =>{
@@ -63,13 +64,22 @@ client.connect(err => {
             {$set: {name: name, price: price, category: category, img: img} },
             {returnDocument: true}
         )
-        .then((result) => res.send(result) )
+        .then((result) => res.send(result))
     })
 
     // delete data from database
     app.delete("/delete/:id", (req, res) =>{
         gadgetsCollection.findOneAndDelete({_id: ObjectId(req.params.id)})
         .then((err, doc) => console.log(err, doc))
+    })
+
+    // proceed order
+    app.post("/addOrders", (req, res) =>{
+        console.log(req.body)
+        ordersCollection.insertOne(req.body)
+        .then(result => {
+            res.send(result)
+        })
     })
 });
 
