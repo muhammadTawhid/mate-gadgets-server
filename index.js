@@ -15,7 +15,6 @@ const dbPassword = process.env.DB_PASS;
 
 const port = process.env.PORT || 5000;
 
-
 var serviceAccount = require("./config/mate-gadgets-firebase-adminsdk-eklnu-5b2c9f0c59.json");
 
 admin.initializeApp({
