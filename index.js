@@ -47,7 +47,6 @@ client.connect(err => {
 
     // read data by name
     app.get("/product/:name", (req, res) => {
-        console.log(req.params.name)
         gadgetsCollection.find({ name: req.params.name })
             .toArray((err, document) => {
                 res.send(document)
@@ -55,7 +54,6 @@ client.connect(err => {
     })
     // read data by id
     app.get("/productById/:id", (req, res) => {
-        console.log(req.params.id)
         gadgetsCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, document) => {
                 res.send(document[0])
@@ -84,7 +82,6 @@ client.connect(err => {
 
     // proceed order
     app.post("/addOrders", (req, res) => {
-        console.log(req.body)
         ordersCollection.insertOne(req.body)
             .then(result => {
                 res.send(result)
@@ -93,7 +90,6 @@ client.connect(err => {
 
     // get orders
     app.get("/orders", (req, res) => {
-        console.log(req.query.email, "query email")
         const email = req.query.email
         const idToken = req.headers.authorization
 
@@ -102,11 +98,9 @@ client.connect(err => {
                 .verifyIdToken(idToken)
                 .then((decodedToken) => {
                     const decodedEmail = decodedToken.email;
-                    console.log(decodedEmail, "decoded email");
                     if (decodedEmail === email) {
                         ordersCollection.find({ userEmail: email })
                             .toArray((err, doc) => {
-                                console.log(doc)
                                 res.send(doc)
                             })
                     }
@@ -117,17 +111,16 @@ client.connect(err => {
         }
 
     })
-    
+
     // remove order
     app.delete("/order/:orderId", (req, res) => {
-        console.log(req.params.orderId)
         ordersCollection.findOneAndDelete({ _id: ObjectId(req.params.orderId) })
             .then((err, doc) => console.log(err, doc))
     })
 });
 
 app.get("/", (req, res) => {
-    res.send("hellowwoo")
+    res.send("hello world")
 })
 
 app.listen(port)
