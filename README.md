@@ -1,6 +1,6 @@
 
 # Mate Gadgets
- **Mate Gadgets** is a responsive full-stack e-commerce application.
+ **Mate Gadgets** is a responsive full-stack e-commerce web application.
 ## Overview
 ![App Screenshot](https://raw.githubusercontent.com/muhammadTawhid/mate-gadgets-client/main/src/images/Mate-Gadgets-New-01.jpeg)
 ## About & Features
