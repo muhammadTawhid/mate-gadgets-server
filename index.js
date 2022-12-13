@@ -27,7 +27,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     const gadgetsCollection = client.db(dbUser).collection("gadgets");
     const ordersCollection = client.db(dbUser).collection("orders");
-
+    console.log(gadgetsCollection);
     //   create data to database
     app.post("/addProduct", (req, res) => {
         gadgetsCollection.insertOne(req.body)
@@ -119,7 +119,7 @@ client.connect(err => {
 });
 
 app.get("/", (req, res) => {
-    res.send("hello world")
+    res.send("hello mate gadgets")
 })
 
 app.listen(port)
