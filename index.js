@@ -39,6 +39,7 @@ client.connect(err => {
     app.get("/products", (req, res) => {
         gadgetsCollection.find()
             .toArray((err, document) => {
+                console.log(document)
                 res.send(document)
             })
     })
@@ -119,6 +120,9 @@ client.connect(err => {
 
 app.get("/", (req, res) => {
     res.send("hello mate gadgets.")
+})
+app.get("/working", (req, res) => {
+    res.send("hello mate gadgets i'm working")
 })
 
 app.listen(port)
