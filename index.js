@@ -119,10 +119,7 @@ client.connect(err => {
 });
 
 app.get("/", (req, res) => {
-    res.send("hello mate gadgets.")
-})
-app.get("/working", (req, res) => {
-    res.send("hello mate gadgets i'm working")
+    res.send("hello mate gadgets")
 })
 
 app.listen(port)
